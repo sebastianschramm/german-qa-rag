@@ -16,10 +16,13 @@ from qa_rag.settings import settings
 def get_prompt_node(prompt: str, settings: pydantic.BaseSettings) -> PromptNode:
     return PromptNode(
         model_name_or_path=settings.openai_model,
-        default_prompt_template=PromptTemplate(prompt=prompt, output_parser=AnswerParser(reference_pattern=r"Document\[(\d+)\]")),
+        default_prompt_template=PromptTemplate(
+            prompt=prompt,
+            output_parser=AnswerParser(reference_pattern=r"Document\[(\d+)\]"),
+        ),
         api_key=settings.openai_api_key,
         max_length=768,
-        model_kwargs={"stream": True},
+        model_kwargs={"stream": False},
     )
 
 

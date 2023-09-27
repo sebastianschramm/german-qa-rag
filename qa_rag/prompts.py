@@ -7,7 +7,9 @@ Focus on the question and avoid unnecessary information in your answer.\n
 
 prompt_references = """
 Create a concise and informative answer for a given question based solely on the given documents. You must only use information from the given documents.
-Use an unbiased and journalistic tone. Do not repeat text. Avoid rephrasing. Cite the documents using Document[number] notation right after each sentence.
+Use an unbiased and journalistic tone. Do not repeat text. Avoid rephrasing.
+Do not answer with only yes or no, make sure to answer with at least 2 sentences. Cite the documents using Document[number] notation right after each sentence.
+For example: 'This is a test. (Document[1])'.
 If the documents do not contain the answer to the question, say that ‘answering is not possible given the available information.’
 {join(documents, delimiter=new_line, pattern=new_line+'Document[$idx]: $content', str_replace={new_line: ' ', '[': '(', ']': ')'})}
 
