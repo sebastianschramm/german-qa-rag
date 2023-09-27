@@ -19,7 +19,7 @@ def get_prompt_node(prompt: str, settings: pydantic.BaseSettings) -> PromptNode:
         default_prompt_template=PromptTemplate(prompt, output_parser=AnswerParser()),
         api_key=settings.openai_api_key,
         max_length=768,
-        model_kwargs={"stream": False},
+        model_kwargs={"stream": True},
     )
 
 
