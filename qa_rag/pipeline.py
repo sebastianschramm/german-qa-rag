@@ -39,16 +39,11 @@ def get_web_retriever(
 def get_pipeline():
     pipeline = Pipeline()
     pipeline.add_node(
-        component=TransformersTranslator("Helsinki-NLP/opus-mt-en-de"),
-        name="Translator_en_de",
-        inputs=["Query"],
-    )
-    pipeline.add_node(
         component=get_web_retriever(
             settings=settings, allowed_domains=["stadt-koeln.de"]
         ),
         name="Retriever",
-        inputs=["Translator_en_de"],
+        inputs=["Query"],
     )
     pipeline.add_node(
         component=TopPSampler(top_p=0.90), name="Sampler", inputs=["Retriever"]
@@ -62,11 +57,6 @@ def get_pipeline():
         component=get_prompt_node(prompt=prompt_answer, settings=settings),
         name="PromptNode",
         inputs=["LostInTheMiddleRanker"],
-    )
-    pipeline.add_node(
-        component=TransformersTranslator("Helsinki-NLP/opus-mt-de-en"),
-        name="Translator_de_en",
-        inputs=["PromptNode"],
     )
 
     logging.disable(logging.CRITICAL)
